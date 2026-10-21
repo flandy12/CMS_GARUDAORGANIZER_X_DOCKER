@@ -1,0 +1,85 @@
+services:
+  # Laravel + PHP + Apache
+  app:
+    build:
+      context: .
+      dockerfile: dockerfile
+    container_name: cms-garudaorganizer
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html
+      - cms_garudaorganizer_vendor:/var/www/html/vendor
+    depends_on:
+      mysql:
+        condition: service_healthy
+    restart: unless-stopped
+
+  # Vite untuk frontend development
+  vite:
+    image: node:20.20-alpine
+    container_name: cms-garudaorganizer-vite
+    working_dir: /var/www/html
+    ports:
+      - "5173:5173"
+    volumes:
+      - .:/var/www/html
+      - cms_garudaorganizer_modules:/var/www/html/node_modules
+    command: sh -c "npm install && npm run dev -- --host 0.0.0.0"
+    restart: unless-stopped
+
+  # Database MySQL
+  mysql:
+    image: mysql:8.0
+    container_name: cms-garudaorganizer-mysql
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE:?Set DB_DATABASE in .env}
+      MYSQL_USER: ${DB_USERNAME:?Set DB_USERNAME in .env}
+      MYSQL_PASSWORD: ${DB_PASSWORD:?Set DB_PASSWORD in .env}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:?Set DB_ROOT_PASSWORD in .env}
+    ports:
+      - "127.0.0.1:3307:3306"
+    volumes:
+      - mysql_cms_garudaorganizer:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-u", "root", "-p$${MYSQL_ROOT_PASSWORD}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    restart: unless-stopped
+
+      # Database MongoDB
+  mongo:
+    image: mongo:8.0
+    container_name: cms-garudaorganizer-mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USERNAME:?Set MONGO_ROOT_USERNAME in .env}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD:?Set MONGO_ROOT_PASSWORD in .env}
+    ports:
+      - "127.0.0.1:27018:27017"
+    volumes:
+      - mongodb_cms_garudaorganizer:/data/db
+    healthcheck:
+      test:
+        - CMD
+        - mongosh
+        - --quiet
+        - --username
+        - ${MONGO_ROOT_USERNAME}
+        - --password
+        - ${MONGO_ROOT_PASSWORD}
+        - --authenticationDatabase
+        - admin
+        - --eval
+        - "db.adminCommand('ping').ok"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+    restart: unless-stopped
+
+volumes:
+  cms_garudaorganizer_vendor:
+  cms_garudaorganizer_modules:
+  mysql_cms_garudaorganizer:
+  mongodb_cms_garudaorganizer:
