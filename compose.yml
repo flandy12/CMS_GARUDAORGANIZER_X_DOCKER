@@ -1,6 +1,7 @@
 services:
   # Laravel + PHP + Apache
   app:
+    image: flandy21/cms_garudaorganizer:v1.0.0
     build:
       context: .
       dockerfile: dockerfile
