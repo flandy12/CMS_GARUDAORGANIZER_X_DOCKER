@@ -109,8 +109,8 @@ return [
             'host' => env('MONGODB_HOST', 'mongo'),
             'port' => env('MONGODB_PORT', 27017),
             'database' => env('MONGODB_DATABASE', 'garuda'),
-            'username' => env('MONGODB_USERNAME'),
-            'password' => env('MONGODB_PASSWORD'),
+            'username' => env('MONGODB_USERNAME') ?: env('MONGO_ROOT_USERNAME'),
+            'password' => env('MONGODB_PASSWORD') ?: env('MONGO_ROOT_PASSWORD'),
             'options' => [
                 'appname' => 'garuda',
                 'authSource' => 'admin',
