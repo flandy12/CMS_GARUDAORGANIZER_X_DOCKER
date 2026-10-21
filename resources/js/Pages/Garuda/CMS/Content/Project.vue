@@ -71,14 +71,14 @@ const successFormSubmit = (title, message) => {
 </script>
 
 <template>
-	<AppLayout title="Project">
+	<AppLayout title="Proyek">
 		<template #header>
 			<h1 class="font-semibold text-xl text-gray-800 leading-tight">
 				Project
 			</h1>
 		</template>
 
-		<div class="py-12">
+		<div class="cms-content px-4 py-6 sm:px-6 lg:px-8 lg:py-8">
 			<PopUpMessage
 				v-if="actionStatus" 
 				:title="actionTitle"
@@ -88,30 +88,35 @@ const successFormSubmit = (title, message) => {
 				@closePopUp="closePopUp"
 			/>
 
-			<div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-				<div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+			<div class="mx-auto max-w-7xl">
+				<div class="cms-page-heading">
+					<div><span class="cms-eyebrow">Konten website</span><h2>Halaman Proyek</h2><p>Kelola banner, narasi, dan portofolio proyek perusahaan dalam satu halaman.</p></div>
+					<span class="cms-status"><span></span>{{ project ? 'Konten aktif' : 'Belum tersedia' }}</span>
+				</div>
+				<div class="cms-panel mt-6">
 					<div>
-        				<div class="p-6 lg:p-8 bg-white border-b border-gray-200">
-        					<div v-if="!project">
-								<ProjectForm v-if="$page.props.permissions.includes('create project')" title="Create Project Page" @success="successFormSubmit">
-									<PrimaryButton>Add</PrimaryButton>
+						<div class="p-4 sm:p-6 lg:p-8">
+							<div v-if="!project" class="cms-empty-state">
+								<div class="cms-empty-icon">+</div><h3>Konten proyek belum tersedia</h3><p>Tambahkan portofolio proyek pertama untuk mulai menampilkan karya.</p>
+								<ProjectForm v-if="$page.props.permissions.includes('create project')" title="Tambah Konten Proyek" @success="successFormSubmit">
+									<PrimaryButton>Tambah Konten</PrimaryButton>
 								</ProjectForm>
 								<p v-else class="text-sm text-gray-500">Belum ada konten. Anda tidak memiliki akses untuk membuat konten baru.</p>
 							</div>
 
 							<div v-else>
-								<div class="mb-10 flex gap-4">
+								<div class="cms-actions">
 									<div v-if="$page.props.permissions.includes('update project')">
-										<ProjectForm title="Edit Project Page" :id="project.data.id" @success="successFormSubmit">
-											<PrimaryButton>Edit</PrimaryButton>
+										<ProjectForm title="Ubah Konten Proyek" :id="project.data.id" @success="successFormSubmit">
+											<PrimaryButton>Ubah Konten</PrimaryButton>
 										</ProjectForm>
 									</div>
 									<div v-if="$page.props.permissions.includes('delete project')">
-										<DangerButton v-on:click.prevent="confirmDeletion">Delete</DangerButton>
+										<DangerButton v-on:click.prevent="confirmDeletion">Hapus</DangerButton>
 									</div>
 								</div>
 
-								<div class="grid grid-cols-2 gap-2">
+								<div class="cms-entry-card grid grid-cols-2 gap-6">
 									<div>
 										<div>
 											<img :src="project.data.banner" class="w-full">
@@ -122,7 +127,7 @@ const successFormSubmit = (title, message) => {
 									</div>
 								</div>
 
-								<div class="grid grid-cols-2 gap-2 mt-10" v-for="(result, key) in project.data.results" :key="key">
+								<div class="cms-entry-card mt-6 grid grid-cols-2 gap-6" v-for="(result, key) in project.data.results" :key="key">
 									<div>
 										<div>
 											<img :src="'/'+result.image" class="w-full">
@@ -146,12 +151,12 @@ const successFormSubmit = (title, message) => {
 	            </template>
 
 	            <template #content>
-	                {{ 'Are you sure want to delete all project content?' }}
+	                {{ 'Apakah Anda yakin ingin menghapus seluruh konten proyek?' }}
 	            </template>
 
 	            <template #footer>
 	                <SecondaryButton v-on:click.prevent="closeModalDelete">
-	                    {{ 'Cancel' }}
+	                    {{ 'Batal' }}
 	                </SecondaryButton>
 
 	                <DangerButton
@@ -160,7 +165,7 @@ const successFormSubmit = (title, message) => {
 	                    :disabled="processingDelete"
 	                    v-on:click.prevent="removeData"
 	                >
-	                    {{ 'Delete Project' }}
+	                    {{ 'Hapus Proyek' }}
 	                </DangerButton>
 	            </template>
 	        </ConfirmationModal>

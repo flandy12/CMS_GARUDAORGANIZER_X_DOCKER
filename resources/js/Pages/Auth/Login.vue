@@ -30,12 +30,17 @@ const submit = () => {
 </script>
 
 <template>
-    <Head title="Log in" />
+    <Head title="Masuk" />
 
     <AuthenticationCard>
         <template #logo>
-            <ColorLogo />
+            <ColorLogo class="h-auto w-full" />
         </template>
+
+        <div class="mb-6 text-center">
+            <h1 class="text-2xl font-bold text-slate-900">Selamat datang</h1>
+            <p class="mt-1 text-sm text-slate-500">Masuk untuk mengelola konten website.</p>
+        </div>
 
         <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
             {{ status }}
@@ -57,7 +62,7 @@ const submit = () => {
             </div>
 
             <div class="mt-4">
-                <InputLabel for="password" value="Password" />
+                <InputLabel for="password" value="Kata sandi" />
                 <TextInput
                     id="password"
                     v-model="form.password"
@@ -72,17 +77,17 @@ const submit = () => {
             <div class="block mt-4">
                 <label class="flex items-center">
                     <Checkbox v-model:checked="form.remember" name="remember" />
-                    <span class="ms-2 text-sm text-gray-600">Remember me</span>
+                    <span class="ms-2 text-sm text-slate-600">Ingat saya</span>
                 </label>
             </div>
 
-            <div class="flex items-center justify-end mt-4">
-                <Link v-if="canResetPassword" :href="route('password.request')" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                    Forgot your password?
+            <div class="mt-6 flex flex-col-reverse items-stretch gap-3 sm:flex-row sm:items-center sm:justify-between">
+                <Link v-if="canResetPassword" :href="route('password.request')" class="rounded-md text-center text-sm font-semibold text-blue-700 hover:text-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    Lupa kata sandi?
                 </Link>
 
-                <PrimaryButton class="ms-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Log in
+                <PrimaryButton class="w-full sm:w-auto" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                    Masuk
                 </PrimaryButton>
             </div>
         </form>

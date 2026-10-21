@@ -71,14 +71,14 @@ const successFormSubmit = (title, message) => {
 </script>
 
 <template>
-	<AppLayout title="Contact Us">
+	<AppLayout title="Kontak">
 		<template #header>
 			<h1 class="font-semibold text-xl text-gray-800 leading-tight">
 				Contact Us
 			</h1>
 		</template>
 
-		<div class="py-12">
+		<div class="cms-content px-4 py-6 sm:px-6 lg:px-8 lg:py-8">
 			<PopUpMessage
 				v-if="actionStatus" 
 				:title="actionTitle"
@@ -88,40 +88,45 @@ const successFormSubmit = (title, message) => {
 				@closePopUp="closePopUp"
 			/>
 
-			<div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
-				<div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+			<div class="mx-auto max-w-5xl">
+				<div class="cms-page-heading">
+					<div><span class="cms-eyebrow">Informasi publik</span><h2>Kontak Perusahaan</h2><p>Pastikan email dan nomor WhatsApp selalu aktif agar pengunjung mudah menghubungi tim.</p></div>
+					<span class="cms-status"><span></span>{{ contactUs ? 'Kontak aktif' : 'Belum tersedia' }}</span>
+				</div>
+				<div class="cms-panel mt-6">
 					<div>
-        				<div class="p-6 lg:p-8 bg-white border-b border-gray-200">
-        					<div v-if="!contactUs">
-								<ContactUsForm v-if="$page.props.permissions.includes('create contact us')" title="Create Contact Us Page" @success="successFormSubmit">
-									<PrimaryButton>Add</PrimaryButton>
+						<div class="p-4 sm:p-6 lg:p-8">
+							<div v-if="!contactUs" class="cms-empty-state">
+								<div class="cms-empty-icon">+</div><h3>Informasi kontak belum tersedia</h3><p>Tambahkan email dan nomor WhatsApp yang dapat dihubungi.</p>
+								<ContactUsForm v-if="$page.props.permissions.includes('create contact us')" title="Tambah Informasi Kontak" @success="successFormSubmit">
+									<PrimaryButton>Tambah Kontak</PrimaryButton>
 								</ContactUsForm>
 								<p v-else class="text-sm text-gray-500">Belum ada konten. Anda tidak memiliki akses untuk membuat konten baru.</p>
 							</div>
 
 							<div v-else>
-								<div class="mb-10 flex gap-4">
+								<div class="cms-actions">
 									<div v-if="$page.props.permissions.includes('update contact us')">
-										<ContactUsForm title="Edit Home Page" :id="contactUs.data.id" @success="successFormSubmit">
-											<PrimaryButton>Edit</PrimaryButton>
+										<ContactUsForm title="Ubah Informasi Kontak" :id="contactUs.data.id" @success="successFormSubmit">
+											<PrimaryButton>Ubah Kontak</PrimaryButton>
 										</ContactUsForm>
 									</div>
 									<div v-if="$page.props.permissions.includes('delete contact us')">
-										<DangerButton v-on:click.prevent="confirmDeletion">Delete</DangerButton>
+										<DangerButton v-on:click.prevent="confirmDeletion">Hapus</DangerButton>
 									</div>
 								</div>
 
-								<div class="grid grid-cols-2 gap-2">
+								<div class="grid grid-cols-2 gap-4">
 									<div>
-										<div class="flex gap-2">
-											<div>To Email</div>
-											<div>: {{ contactUs.data.to_email }}</div>
+										<div class="cms-contact-card">
+											<div class="cms-contact-icon">@</div>
+											<div><span>Email tujuan</span><strong>{{ contactUs.data.to_email }}</strong></div>
 										</div>
 									</div>
 									<div>
-										<div class="flex gap-2">
-											<div>Whatsapp Number</div>
-											<div>: {{ contactUs.data.whatsapp_number }}</div>
+										<div class="cms-contact-card">
+											<div class="cms-contact-icon">WA</div>
+											<div><span>Nomor WhatsApp</span><strong>{{ contactUs.data.whatsapp_number }}</strong></div>
 										</div>
 									</div>
 								</div>
@@ -137,12 +142,12 @@ const successFormSubmit = (title, message) => {
 	            </template>
 
 	            <template #content>
-	                {{ 'Are you sure want to delete all contact us content?' }}
+	                {{ 'Apakah Anda yakin ingin menghapus informasi kontak?' }}
 	            </template>
 
 	            <template #footer>
 	                <SecondaryButton v-on:click.prevent="closeModalDelete">
-	                    {{ 'Cancel' }}
+	                    {{ 'Batal' }}
 	                </SecondaryButton>
 
 	                <DangerButton
@@ -151,7 +156,7 @@ const successFormSubmit = (title, message) => {
 	                    :disabled="processingDelete"
 	                    v-on:click.prevent="removeData"
 	                >
-	                    {{ 'Delete Contact Us' }}
+	                    {{ 'Hapus Kontak' }}
 	                </DangerButton>
 	            </template>
 	        </ConfirmationModal>

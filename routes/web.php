@@ -4,10 +4,8 @@ use App\Http\Controllers\DashboardController;
 use App\Models\JobfairRegistrations;
 use App\Models\NewRegisters;
 use Illuminate\Contracts\Queue\Job;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,11 +18,7 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', function () {
-    // return redirect()->route("login");
-    return Inertia::render('Auth/Register');
-
-});
+Route::redirect('/', '/login');
 
 Route::middleware([
     'auth:sanctum',
