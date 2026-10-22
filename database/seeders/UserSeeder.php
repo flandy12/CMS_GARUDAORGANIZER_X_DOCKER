@@ -15,7 +15,7 @@ class UserSeeder extends Seeder
     {
         $users = [
             [
-                'name' => config('cms.seed_users.admin.name'),
+            'name' => config('cms.seed_users.admin.name'),
                 'email' => config('cms.seed_users.admin.email'),
                 'password' => config('cms.seed_users.admin.password'),
                 'role' => 'admin',
