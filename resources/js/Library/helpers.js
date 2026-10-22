@@ -1,7 +1,7 @@
-const checkRolePermission = (role_permissions = {}, roles = [], permissions = []) => {
+const checkRolePermission = async (role_permissions, roles, permissions) => {
 	let result = false;
 
-	Object.keys(role_permissions).forEach((key) => {
+	await Object.keys(role_permissions).map((key, index) => {
 		if(roles.length > 0) {
 			if(roles.indexOf(key) !== -1) {
 				result = true;

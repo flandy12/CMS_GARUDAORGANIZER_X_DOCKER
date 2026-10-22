@@ -97,7 +97,7 @@ const successFormSubmit = (title, message) => {
 					<div>
         				<div class="p-6 lg:p-8 bg-white border-b border-gray-200">
         					<div>
-							<ServiceForm v-if="$page.props.permissions.includes('create service')" title="Create Service Page" @success="successFormSubmit">
+								<ServiceForm title="Create Service Page" @success="successFormSubmit">
 									<PrimaryButton>Add</PrimaryButton>
 								</ServiceForm>
 							</div>
@@ -133,12 +133,12 @@ const successFormSubmit = (title, message) => {
 										</div>
 										<div>
 											<div>
-											<ServiceForm v-if="$page.props.permissions.includes('update service')" title="Update Service Page" :id="result.id" @success="successFormSubmit">
+												<ServiceForm title="Update Service Page" :id="result.id" @success="successFormSubmit">
 													<PrimaryButton>Edit</PrimaryButton>
 												</ServiceForm>
 											</div>
 
-										<div v-if="$page.props.permissions.includes('delete service')" class="mt-4">
+											<div class="mt-4">
 												<DangerButton v-on:click.prevent="confirmDeletion(result.id, result.type)">Delete</DangerButton>
 											</div>
 										</div>

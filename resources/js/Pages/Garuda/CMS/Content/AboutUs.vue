@@ -93,20 +93,19 @@ const successFormSubmit = (title, message) => {
 					<div>
         				<div class="p-6 lg:p-8 bg-white border-b border-gray-200">
         					<div v-if="!aboutUs">
-								<AboutUsForm v-if="$page.props.permissions.includes('create about us')" title="Create About Us Page" @success="successFormSubmit">
+								<AboutUsForm title="Create About Us Page" @success="successFormSubmit">
 									<PrimaryButton>Add</PrimaryButton>
 								</AboutUsForm>
-								<p v-else class="text-sm text-gray-500">Belum ada konten. Anda tidak memiliki akses untuk membuat konten baru.</p>
 							</div>
 
 							<div v-else>
 								<div class="mb-10 flex gap-4">
-									<div v-if="$page.props.permissions.includes('update about us')">
+									<div>
 										<AboutUsForm title="Edit Home Page" :id="aboutUs.data.id" @success="successFormSubmit">
 											<PrimaryButton>Edit</PrimaryButton>
 										</AboutUsForm>
 									</div>
-									<div v-if="$page.props.permissions.includes('delete about us')">
+									<div>
 										<DangerButton v-on:click.prevent="confirmDeletion">Delete</DangerButton>
 									</div>
 								</div>
