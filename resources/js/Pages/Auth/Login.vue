@@ -30,12 +30,10 @@ const submit = () => {
 </script>
 
 <template>
+
     <Head title="Masuk" />
 
     <AuthenticationCard>
-        <template #logo>
-            <ColorLogo class="h-auto w-full" />
-        </template>
 
         <div class="mb-6 text-center">
             <h1 class="text-2xl font-bold text-slate-900">Selamat datang</h1>
@@ -49,28 +47,15 @@ const submit = () => {
         <form @submit.prevent="submit">
             <div>
                 <InputLabel for="email" value="Email" />
-                <TextInput
-                    id="email"
-                    v-model="form.email"
-                    type="email"
-                    class="mt-1 block w-full"
-                    required
-                    autofocus
-                    autocomplete="username"
-                />
+                <TextInput id="email" v-model="form.email" type="email" class="mt-1 block w-full" required autofocus
+                    autocomplete="username" />
                 <InputError class="mt-2" :message="form.errors.email" />
             </div>
 
             <div class="mt-4">
                 <InputLabel for="password" value="Kata sandi" />
-                <TextInput
-                    id="password"
-                    v-model="form.password"
-                    type="password"
-                    class="mt-1 block w-full"
-                    required
-                    autocomplete="current-password"
-                />
+                <TextInput id="password" v-model="form.password" type="password" class="mt-1 block w-full" required
+                    autocomplete="current-password" />
                 <InputError class="mt-2" :message="form.errors.password" />
             </div>
 
@@ -82,11 +67,13 @@ const submit = () => {
             </div>
 
             <div class="mt-6 flex flex-col-reverse items-stretch gap-3 sm:flex-row sm:items-center sm:justify-between">
-                <Link v-if="canResetPassword" :href="route('password.request')" class="rounded-md text-center text-sm font-semibold text-blue-700 hover:text-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <Link v-if="canResetPassword" :href="route('password.request')"
+                    class="rounded-md text-center text-sm font-semibold text-blue-700 hover:text-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500">
                     Lupa kata sandi?
                 </Link>
 
-                <PrimaryButton class="w-full sm:w-auto" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                <PrimaryButton class="w-full sm:w-auto" :class="{ 'opacity-25': form.processing }"
+                    :disabled="form.processing">
                     Masuk
                 </PrimaryButton>
             </div>
