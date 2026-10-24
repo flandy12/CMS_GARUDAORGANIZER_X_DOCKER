@@ -30,7 +30,7 @@ const logout = () => router.post(route('logout'));
         <Banner />
         <div v-if="mobileMenuOpen" class="fixed inset-0 z-40 bg-slate-950/50 backdrop-blur-sm lg:hidden" @click="mobileMenuOpen = false" />
 
-        <aside :class="mobileMenuOpen ? 'translate-x-0' : '-translate-x-full'" class="fixed inset-y-0 left-0 z-50 flex w-72 flex-col bg-gradient-to-b from-blue-950 via-blue-900 to-blue-800 text-white shadow-2xl transition-transform duration-200 lg:translate-x-0">
+        <aside :class="mobileMenuOpen ? 'translate-x-0' : '-translate-x-full'" class="fixed inset-y-0 left-0 z-50 flex w-72 flex-col bg-hero shadow-2xl transition-transform duration-200 lg:translate-x-0">
             <div class="flex h-20 items-center justify-between border-b border-white/10 px-6">
                 <Link :href="route('dashboard')" class="flex items-center gap-3" @click="mobileMenuOpen = false">
                     <span class="flex h-11 w-11 items-center justify-center rounded-xl bg-white p-2 shadow-lg"><ColorLogo class="h-full w-full" /></span>
